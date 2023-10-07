@@ -20,6 +20,7 @@ interface IStakeMeet {
 
     /// @notice External functions
 
+    function addOwner(address _ownerAddress) external;
     function addUser(address _userAddress, string memory _email) external;
     function createMeet(uint256 _meetDate, string[] memory _attendeesEmail) external payable;
     function addStake(uint256 _meetIndex, bytes32 _meetHash) external payable;
