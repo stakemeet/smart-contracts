@@ -1,1 +1,7 @@
-# smart-contracts
+# StakeMeet
+
+* **Contract Address**: 0xe156BaB0DB3567fd56465446a0247FbD306f5186
+* **.env variables**
+    * SEPOLIA_ACCESSPOINT_URL
+    * SEPOLIA_ACCOUNT
+    * SEPOLIA_PRIVATE_KEY
