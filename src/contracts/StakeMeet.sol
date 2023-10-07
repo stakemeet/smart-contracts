@@ -2,9 +2,9 @@
 pragma solidity 0.8.21;
 
 import "../interfaces/IStakeMeet.sol";
+import "./abstract/StakeMeetToken.sol";
 
-/// @dev NFT interface
-contract StakeMeet is IStakeMeet{
+contract StakeMeet is StakeMeetToken, IStakeMeet{
 
     /// constants
     string constant salt = "\x19StakeMeet:\n32";
@@ -13,15 +13,14 @@ contract StakeMeet is IStakeMeet{
 
     uint256 public meetIndex;
     uint256 public userIndex;
-    uint256 public decimals;
     uint256 public minStake;
+    uint256 public feePercentage;
 
     mapping(address => bool) public owner;
     mapping(address => User) public user;
     mapping(string => address) public userEmail;
     mapping(uint256 => Meet) public meet;
     mapping(uint256 => mapping(address => bool)) public attendee;
-    mapping(address => uint256) public balanceOf;
     mapping(address => uint256) public withdrawAllowed;
 
     /// Modifiers
@@ -52,9 +51,15 @@ contract StakeMeet is IStakeMeet{
     }
     
     /// @notice Constructor
-    constructor(uint256 _minStake, address[] memory _owner) {
-        decimals = 18;
+    constructor(
+        string memory _name, 
+        string memory _symbol, 
+        uint256 _minStake, 
+        address[] memory _owner, 
+        uint256 _feePercentage) StakeMeetToken(_name, _symbol)
+    {
         minStake = _minStake;
+        feePercentage = _feePercentage;
         owner[msg.sender] = true;
         for (uint8 i = 0; i < _owner.length; i++) {
             address _ownerAddress = _owner[i];
@@ -90,6 +95,7 @@ contract StakeMeet is IStakeMeet{
         meetIndex++;
         meet[meetIndex] = _newMeet;
         balanceOf[msg.sender] = _stake;
+        totalSupply += _stake;
         attendee[meetIndex][msg.sender] = true;
         _loadAttendeesAddress(meetIndex, _attendeesEmail);
     }
@@ -99,27 +105,31 @@ contract StakeMeet is IStakeMeet{
     }
 
     function addStake(uint256 _meetIndex, bytes32 _meetHash) external payable onlyAuthorizedAttendee(_meetIndex, _meetHash) {
-        balanceOf[msg.sender] = msg.value;
+        balanceOf[msg.sender] += msg.value;
+        totalSupply += msg.value;
         attendee[meetIndex][msg.sender] = true;
     }
 
     function closeMeet(uint256 _meetIndex, string[] memory _attendedEmail, string[] memory _nonAttendeesEmail) external onlyOwner() {
         Meet memory _meet = meet[_meetIndex];
         uint256 _stake = _meet.stake;
+        uint256 _fee = _stake * feePercentage / 1 ether;
+
         uint256 _attendeesNumber = _attendedEmail.length;
         uint256 _nonAttendeesNumber = _nonAttendeesEmail.length;
-        uint256 _amountToDivide = _stake * _nonAttendeesNumber;
+        uint256 _amountToDivide = (_stake - _fee) * _nonAttendeesNumber;
         uint256 _amountEarned = _amountToDivide / _attendeesNumber;
         
         for(uint256 i = 0; i < _attendedEmail.length; i ++) {
-            address _attendeeAddress = _getAddress(_nonAttendeesEmail[i]);
+            address _attendeeAddress = _getAddress(_attendedEmail[i]);
             balanceOf[_attendeeAddress] += _amountEarned;
-            withdrawAllowed[_attendeeAddress] += _amountEarned;
+            withdrawAllowed[_attendeeAddress] += _stake + _amountEarned;
         }
 
         for(uint256 i = 0; i < _nonAttendeesEmail.length; i ++) {
             address _attendeeAddress = _getAddress(_nonAttendeesEmail[i]);
-            balanceOf[_attendeeAddress] -= _amountEarned;
+            balanceOf[_attendeeAddress] -= _stake;
+            totalSupply -= _fee;
         }
     }
 
@@ -127,6 +137,7 @@ contract StakeMeet is IStakeMeet{
         uint256 _amountToWithdraw = withdrawAllowed[msg.sender];
         delete withdrawAllowed[msg.sender];
         balanceOf[msg.sender] -= _amountToWithdraw;
+        totalSupply -= _amountToWithdraw;
         payable(msg.sender).transfer(_amountToWithdraw);
     }
 

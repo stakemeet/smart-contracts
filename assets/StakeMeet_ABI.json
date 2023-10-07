@@ -1,414 +1,481 @@
 {
     "abi": [
-    {
-      "inputs": [
         {
-          "internalType": "uint256",
-          "name": "_minStake",
-          "type": "uint256"
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "_name",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "_symbol",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_minStake",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address[]",
+              "name": "_owner",
+              "type": "address[]"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_feePercentage",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "constructor"
         },
         {
-          "internalType": "address[]",
-          "name": "_owner",
-          "type": "address[]"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "constructor"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_caller",
-          "type": "address"
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "_caller",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_stakeAmount",
+              "type": "uint256"
+            }
+          ],
+          "name": "InvalidStakeAmount",
+          "type": "error"
         },
         {
-          "internalType": "uint256",
-          "name": "_stakeAmount",
-          "type": "uint256"
-        }
-      ],
-      "name": "InvalidStakeAmount",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_caller",
-          "type": "address"
-        }
-      ],
-      "name": "NoBalanceToWithdraw",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_caller",
-          "type": "address"
-        }
-      ],
-      "name": "NotAnAuthorizedAttendee",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_caller",
-          "type": "address"
-        }
-      ],
-      "name": "NotAnOwner",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_caller",
-          "type": "address"
-        }
-      ],
-      "name": "NotAnUser",
-      "type": "error"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "NewMeet",
-      "type": "event"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_ownerAddress",
-          "type": "address"
-        }
-      ],
-      "name": "addOwner",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_meetIndex",
-          "type": "uint256"
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "_caller",
+              "type": "address"
+            }
+          ],
+          "name": "NoBalanceToWithdraw",
+          "type": "error"
         },
         {
-          "internalType": "bytes32",
-          "name": "_meetHash",
-          "type": "bytes32"
-        }
-      ],
-      "name": "addStake",
-      "outputs": [],
-      "stateMutability": "payable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_userAddress",
-          "type": "address"
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "_caller",
+              "type": "address"
+            }
+          ],
+          "name": "NotAnAuthorizedAttendee",
+          "type": "error"
         },
         {
-          "internalType": "string",
-          "name": "_email",
-          "type": "string"
-        }
-      ],
-      "name": "addUser",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "_caller",
+              "type": "address"
+            }
+          ],
+          "name": "NotAnOwner",
+          "type": "error"
         },
         {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "attendee",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "balanceOf",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_meetIndex",
-          "type": "uint256"
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "_caller",
+              "type": "address"
+            }
+          ],
+          "name": "NotAnUser",
+          "type": "error"
         },
         {
-          "internalType": "string[]",
-          "name": "_attendedEmail",
-          "type": "string[]"
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "name": "NewMeet",
+          "type": "event"
         },
         {
-          "internalType": "string[]",
-          "name": "_nonAttendeesEmail",
-          "type": "string[]"
-        }
-      ],
-      "name": "closeMeet",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_meetDate",
-          "type": "uint256"
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "_ownerAddress",
+              "type": "address"
+            }
+          ],
+          "name": "addOwner",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
         },
         {
-          "internalType": "string[]",
-          "name": "_attendeesEmail",
-          "type": "string[]"
-        }
-      ],
-      "name": "createMeet",
-      "outputs": [],
-      "stateMutability": "payable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "decimals",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_meetIndex",
-          "type": "uint256"
-        }
-      ],
-      "name": "getMeetAttendees",
-      "outputs": [
-        {
-          "internalType": "string[]",
-          "name": "",
-          "type": "string[]"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "meet",
-      "outputs": [
-        {
-          "internalType": "bytes32",
-          "name": "meetHash",
-          "type": "bytes32"
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_meetIndex",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "_meetHash",
+              "type": "bytes32"
+            }
+          ],
+          "name": "addStake",
+          "outputs": [],
+          "stateMutability": "payable",
+          "type": "function"
         },
         {
-          "internalType": "uint256",
-          "name": "stake",
-          "type": "uint256"
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "_userAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "string",
+              "name": "_email",
+              "type": "string"
+            }
+          ],
+          "name": "addUser",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
         },
         {
-          "internalType": "uint256",
-          "name": "date",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "meetIndex",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "minStake",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "owner",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "redeemToken",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "user",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "email",
-          "type": "string"
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "name": "attendee",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
         },
         {
-          "internalType": "bool",
-          "name": "isActive",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "name": "balanceOf",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
         {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        }
-      ],
-      "name": "userEmail",
-      "outputs": [
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_meetIndex",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string[]",
+              "name": "_attendedEmail",
+              "type": "string[]"
+            },
+            {
+              "internalType": "string[]",
+              "name": "_nonAttendeesEmail",
+              "type": "string[]"
+            }
+          ],
+          "name": "closeMeet",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
         {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "userIndex",
-      "outputs": [
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_meetDate",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string[]",
+              "name": "_attendeesEmail",
+              "type": "string[]"
+            }
+          ],
+          "name": "createMeet",
+          "outputs": [],
+          "stateMutability": "payable",
+          "type": "function"
+        },
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
+          "inputs": [],
+          "name": "decimals",
+          "outputs": [
+            {
+              "internalType": "uint8",
+              "name": "",
+              "type": "uint8"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
         {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "withdrawAllowed",
-      "outputs": [
+          "inputs": [],
+          "name": "feePercentage",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_meetIndex",
+              "type": "uint256"
+            }
+          ],
+          "name": "getMeetAttendees",
+          "outputs": [
+            {
+              "internalType": "string[]",
+              "name": "",
+              "type": "string[]"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "name": "meet",
+          "outputs": [
+            {
+              "internalType": "bytes32",
+              "name": "meetHash",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stake",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "date",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "meetIndex",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "minStake",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "name",
+          "outputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "name": "owner",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "redeemToken",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "symbol",
+          "outputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "totalSupply",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "name": "user",
+          "outputs": [
+            {
+              "internalType": "string",
+              "name": "email",
+              "type": "string"
+            },
+            {
+              "internalType": "bool",
+              "name": "isActive",
+              "type": "bool"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            }
+          ],
+          "name": "userEmail",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "userIndex",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "name": "withdrawAllowed",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
         }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    }
-  ]
+      ]
 }
