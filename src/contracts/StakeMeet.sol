@@ -71,12 +71,14 @@ contract StakeMeet is StakeMeetToken, IStakeMeet{
 
     function addOwner(address _ownerAddress) external onlyOwner {
         owner[_ownerAddress] = true;
+        emit AddOwner(_ownerAddress);
     }
 
     function addUser(address _userAddress, string memory _email) external onlyOwner {
         userIndex++;
         userEmail[_email] = _userAddress;
         user[_userAddress] = User(_email, true);
+        emit AddUser(_userAddress, _email);
     }
     
     function createMeet(uint256 _meetDate, string[] memory _attendeesEmail) external payable onlyUser() isStaking() {
@@ -98,6 +100,8 @@ contract StakeMeet is StakeMeetToken, IStakeMeet{
         totalSupply += _stake;
         attendee[meetIndex][msg.sender] = true;
         _loadAttendeesAddress(meetIndex, _attendeesEmail);
+
+        emit CreateMeet(_meetDate, _stake, _attendeesEmail);
     }
 
     function getMeetAttendees(uint256 _meetIndex) external view onlyOwner() returns(string[] memory) {
@@ -108,6 +112,8 @@ contract StakeMeet is StakeMeetToken, IStakeMeet{
         balanceOf[msg.sender] += msg.value;
         totalSupply += msg.value;
         attendee[meetIndex][msg.sender] = true;
+
+        emit AddStake(_meetIndex, msg.value);
     }
 
     function closeMeet(uint256 _meetIndex, string[] memory _attendedEmail, string[] memory _nonAttendeesEmail) external onlyOwner() {
@@ -131,6 +137,8 @@ contract StakeMeet is StakeMeetToken, IStakeMeet{
             balanceOf[_attendeeAddress] -= _stake;
             totalSupply -= _fee;
         }
+
+        emit CloseMeet(_meetIndex, _attendedEmail, _nonAttendeesEmail);
     }
 
     function redeemToken() external hasBalanceToWithdraw() {
@@ -139,6 +147,8 @@ contract StakeMeet is StakeMeetToken, IStakeMeet{
         balanceOf[msg.sender] -= _amountToWithdraw;
         totalSupply -= _amountToWithdraw;
         payable(msg.sender).transfer(_amountToWithdraw);
+
+        emit RedeemToken(_amountToWithdraw);
     }
 
     /// Internal functions
@@ -153,4 +163,12 @@ contract StakeMeet is StakeMeetToken, IStakeMeet{
     function _getAddress(string memory _email) internal view returns(address) {
         return userEmail[_email];
     }
+
+    /// Events
+    event AddOwner(address indexed _ownerAddress);
+    event AddUser(address indexed _userAddress, string indexed _email);
+    event CreateMeet(uint256 indexed _meetDate, uint256 indexed _stake, string[] _attendeesEmail);
+    event AddStake(uint256 indexed _meetIndex, uint256 indexed _stake);
+    event CloseMeet(uint256 _meetIndex, string[] _attendedEmail, string[] _nonAttendeesEmail);
+    event RedeemToken(uint256 _amount);
 }
